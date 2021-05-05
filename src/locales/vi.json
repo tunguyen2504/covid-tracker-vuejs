@@ -1,0 +1,18 @@
+{
+  "table": {
+    "header": "Tổng số ca nhiễm",
+    "column": {
+      "countries": "Quốc gia",
+      "total_cases": "Số ca nhiễm"
+    }
+  },
+  "info_box": {
+    "title": {
+      "total_cases": "Số ca nhiễm",
+      "recovered": "Đã khỏi",
+      "deaths": "Tử vong"
+    },
+    "in_total": "tổng cộng"
+  },
+  "worldwide": "Toàn thế giới"
+}

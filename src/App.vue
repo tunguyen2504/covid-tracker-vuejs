@@ -25,6 +25,10 @@
           :newCases="formatToLocaleString(infoBoxData.todayDeaths)"
         ></info-box>
       </div>
+
+      <div class="app-map">
+        <map-container></map-container>
+      </div>
     </div>
     <div class="app-right-container">
       <el-card class="app-right">
@@ -43,6 +47,7 @@
 import TheHeader from './components/TheHeader.vue'
 import TheTable from './components/TheTable.vue'
 import InfoBox from './components/InfoBox.vue'
+import MapContainer from './components/MapContainer.vue'
 import axios from 'axios'
 
 const allCountriesApi = `https://disease.sh/v3/covid-19/countries`
@@ -53,6 +58,7 @@ export default {
     TheHeader,
     TheTable,
     InfoBox,
+    MapContainer,
   },
   data() {
     return {
@@ -174,6 +180,10 @@ export default {
   display: flex;
   /* width: 500px; */
   justify-content: space-between;
+}
+
+.app-map {
+padding-bottom: 15px ;
 }
 
 .card-header {

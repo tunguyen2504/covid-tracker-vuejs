@@ -11,7 +11,8 @@
       "total_cases": "Total cases",
       "recovered": "Recovered",
       "deaths": "Deaths"
-    }
+    },
+    "in_total": "in total"
   },
   "worldwide": "Worldwide"
 }

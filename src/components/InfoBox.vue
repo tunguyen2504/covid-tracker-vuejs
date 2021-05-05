@@ -1,8 +1,8 @@
 <template>
   <el-card class="info-box">
     <h4>{{ title }}</h4>
-    <h2 :class="{ 'info-box--cases--red': type === 'infection', 'info-box--case--black': type === 'death', 'info-box--case--green': type === 'recover'}">+{{ newCases }}</h2>
-    <p>{{total}} Total</p>
+    <h2 :class="{'info-box--cases--red': type === 'infection', 'info-box--case--black': type === 'death', 'info-box--case--green': type === 'recover'}">+{{ newCases }}</h2>
+    <p>{{total}} {{ $t('info_box.in_total')}}</p>
   </el-card>
 </template>
 
