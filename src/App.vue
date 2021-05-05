@@ -8,19 +8,19 @@
       <div class="app-stats">
         <info-box
           type="infection"
-          title="Total Cases"
+          :title="infoBoxTotalCaseTitle"
           :total="formatToLocaleString(infoBoxData.cases)"
           :newCases="formatToLocaleString(infoBoxData.todayCases)"
         ></info-box>
         <info-box
           type="recover"
-          title="Recovered"
+          :title="infoBoxRecoveredTitle"
           :total="formatToLocaleString(infoBoxData.recovered)"
           :newCases="formatToLocaleString(infoBoxData.todayRecovered)"
         ></info-box>
         <info-box
           type="death"
-          title="Deaths"
+          :title="infoBoxDeathTitle"
           :total="formatToLocaleString(infoBoxData.deaths)"
           :newCases="formatToLocaleString(infoBoxData.todayDeaths)"
         ></info-box>
@@ -30,7 +30,7 @@
       <el-card class="app-right">
         <template #header>
           <div class="card-header">
-            <h3 class="app-right-title">Total cases by country</h3>
+            <h3 class="app-right-title">{{ $t('table.header') }}</h3>
           </div>
         </template>
         <the-table :tableData="tableData"></the-table>
@@ -61,6 +61,17 @@ export default {
       countries: [],
       tableData: [],
     }
+  },
+  computed: {
+    infoBoxTotalCaseTitle() {
+      return this.$t('info_box.title.total_cases')
+    },
+    infoBoxRecoveredTitle() {
+      return this.$t('info_box.title.recovered')
+    },
+    infoBoxDeathTitle() {
+      return this.$t('info_box.title.deaths')
+    },
   },
   methods: {
     loadData() {

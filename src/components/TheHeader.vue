@@ -3,21 +3,16 @@
     <h1>COVID-19 TRACKER</h1>
     <el-dropdown trigger="click" @command="onLanguageSelect">
       <span class="el-dropdown-link">
-        {{ selectedLanguage }}<i class="el-icon-arrow-down el-icon--right"></i>
+        {{ $i18n.locale.toUpperCase() }}<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item
-            v-for="lang in languages"
-            :key="lang.code"
-            :command="lang.code"
-            >{{ lang.language }}</el-dropdown-item
-          >
+          <el-dropdown-item v-for="locale in locales" :key="locale.code" :command="locale.code">{{ locale.name }}</el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
     <el-select v-model="selectedCountry" filterable @change="onCountrySelect">
-      <el-option key="WW" label="World Wide" value="WW"></el-option>
+      <el-option key="WW" :label="worldwideLabel" value="WW"></el-option>
       <el-option
         v-for="country in countries"
         :key="country.code"
@@ -29,31 +24,28 @@
 </template>
 
 <script>
+import { getSupportedLocales } from '../util/i18n/supported-locales'
 export default {
   props: ['countries'],
   emits: ['country-changed'],
   data() {
     return {
-      languages: [
-        {
-          language: 'English',
-          code: 'EN',
-        },
-        {
-          language: 'Français',
-          code: 'FR',
-        },
-      ],
-      selectedLanguage: 'EN',
+      locales: getSupportedLocales(),
+      selectedLanguage: this.$i18n.locale.toUpperCase(),
       selectedCountry: 'WW',
+    }
+  },
+  computed: {
+    worldwideLabel() {
+      return this.$t('worldwide')
     }
   },
   methods: {
     onCountrySelect() {
       this.$emit('country-changed', this.selectedCountry)
     },
-    onLanguageSelect(lang) {
-      this.selectedLanguage = lang
+    onLanguageSelect(locale) {
+      this.$i18n.locale = locale
     },
   },
 }

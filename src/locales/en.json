@@ -1,0 +1,17 @@
+{
+  "table": {
+    "header": "Total case by country",
+    "column": {
+      "countries": "Countries",
+      "total_cases": "Total cases"
+    }
+  },
+  "info_box": {
+    "title": {
+      "total_cases": "Total cases",
+      "recovered": "Recovered",
+      "deaths": "Deaths"
+    }
+  },
+  "worldwide": "Worldwide"
+}

@@ -1,8 +1,9 @@
 import { createApp } from 'vue'
 import { ElCard, ElSelect, ElOption, ElTable, ElTableColumn, ElDropdown, ElDropdownMenu, ElDropdownItem} from 'element-plus'
 import App from './App.vue'
+import i18n from './i18n'
 
-const app = createApp(App)
+const app = createApp(App).use(i18n)
 app.component(ElCard.name, ElCard)
 app.component(ElSelect.name, ElSelect)
 app.component(ElOption.name, ElOption)

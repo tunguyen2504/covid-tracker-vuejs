@@ -5,13 +5,14 @@
     :default-sort="{ prop: 'cases', order: 'descending' }"
     style="width: 100%"
   >
-    <el-table-column prop="country" label="Countries" width="180">
+    <el-table-column prop="country" :label="columnCountryLabel" width="180">
     </el-table-column>
     <el-table-column
       prop="cases"
-      label="Total cases"
+      :label="columnTotalCasesLabel"
       sortable
       width="180"
+      align="right"
       :formatter="formatNumber"
     >
     </el-table-column>
@@ -21,6 +22,14 @@
 <script>
 export default {
   props: ['tableData'],
+  computed: {
+    columnCountryLabel() {
+      return this.$t('table.column.countries')
+    },
+    columnTotalCasesLabel() {
+      return this.$t('table.column.total_cases')
+    },
+  },
   methods: {
     formatNumber(row) {
       return Number(row.cases).toLocaleString()
