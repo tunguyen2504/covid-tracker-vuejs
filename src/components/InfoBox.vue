@@ -1,15 +1,33 @@
 <template>
-  <el-card class="info-box">
+  <el-card class="info-box" @click="boxSelected(type)">
     <h4>{{ title }}</h4>
-    <h2 :class="{'info-box--cases--red': type === 'infection', 'info-box--case--black': type === 'death', 'info-box--case--green': type === 'recover'}">+{{ newCases }}</h2>
-    <p>{{total}} {{ $t('info_box.in_total')}}</p>
+    <h2
+      :class="{
+        'info-box--cases--red active': type === 'cases',
+        'info-box--case--black': type === 'deaths',
+        'info-box--case--green': type === 'recovered',
+      }"
+    >
+      +{{ newCases }}
+    </h2>
+    <p>{{ total }} {{ $t('info_box.in_total') }}</p>
   </el-card>
 </template>
 
 <script>
 export default {
   props: ['type', 'title', 'newCases', 'total'],
-  data() {},
+  emits: ['box-selected'],
+  data() {
+    return {
+      active: 'cases',
+    }
+  },
+  methods: {
+    boxSelected(type) {
+      this.$emit('box-selected', type)
+    },
+  },
 }
 </script>
 

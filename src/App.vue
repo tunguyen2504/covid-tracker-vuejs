@@ -7,27 +7,33 @@
       ></the-header>
       <div class="app-stats">
         <info-box
-          type="infection"
+          type="cases"
           :title="infoBoxTotalCaseTitle"
           :total="formatToLocaleString(infoBoxData.cases)"
           :newCases="formatToLocaleString(infoBoxData.todayCases)"
+          @box-selected="infoBoxSelected"
         ></info-box>
         <info-box
-          type="recover"
+          type="recovered"
           :title="infoBoxRecoveredTitle"
           :total="formatToLocaleString(infoBoxData.recovered)"
           :newCases="formatToLocaleString(infoBoxData.todayRecovered)"
+          @box-selected="infoBoxSelected"
         ></info-box>
         <info-box
-          type="death"
+          type="deaths"
           :title="infoBoxDeathTitle"
           :total="formatToLocaleString(infoBoxData.deaths)"
           :newCases="formatToLocaleString(infoBoxData.todayDeaths)"
+          @box-selected="infoBoxSelected"
         ></info-box>
       </div>
 
       <div class="app-map">
-        <map-container></map-container>
+        <map-container
+          :mapData="allCountriesData"
+          :type="mapType"
+        ></map-container>
       </div>
     </div>
     <div class="app-right-container">
@@ -66,6 +72,7 @@ export default {
       infoBoxData: {},
       countries: [],
       tableData: [],
+      mapType: 'cases',
     }
   },
   computed: {
@@ -116,6 +123,10 @@ export default {
           }
         })
       }
+    },
+    infoBoxSelected(type) {
+      this.mapType = type
+      console.log(this.mapType)
     },
     formatToLocaleString(num) {
       return Number(num).toLocaleString()
@@ -183,7 +194,7 @@ export default {
 }
 
 .app-map {
-padding-bottom: 15px ;
+  padding-bottom: 15px;
 }
 
 .card-header {
