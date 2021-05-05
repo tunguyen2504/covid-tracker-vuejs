@@ -1,7 +1,30 @@
 <template>
   <div class="app">
     <div class="app-left">
-      <the-header></the-header>
+      <the-header
+        :countries="countries"
+        @country-changed="loadDataByCountry"
+      ></the-header>
+      <div class="app-stats">
+        <info-box
+          type="infection"
+          title="Total Cases"
+          :total="formatToLocaleString(infoBoxData.cases)"
+          :newCases="formatToLocaleString(infoBoxData.todayCases)"
+        ></info-box>
+        <info-box
+          type="recover"
+          title="Recovered"
+          :total="formatToLocaleString(infoBoxData.recovered)"
+          :newCases="formatToLocaleString(infoBoxData.todayRecovered)"
+        ></info-box>
+        <info-box
+          type="death"
+          title="Deaths"
+          :total="formatToLocaleString(infoBoxData.deaths)"
+          :newCases="formatToLocaleString(infoBoxData.todayDeaths)"
+        ></info-box>
+      </div>
     </div>
     <div class="app-right-container">
       <el-card class="app-right">
@@ -9,8 +32,8 @@
           <div class="card-header">
             <h3 class="app-right-title">Total cases by country</h3>
           </div>
-          <the-table></the-table>
         </template>
+        <the-table :tableData="tableData"></the-table>
       </el-card>
     </div>
   </div>
@@ -19,11 +42,71 @@
 <script>
 import TheHeader from './components/TheHeader.vue'
 import TheTable from './components/TheTable.vue'
+import InfoBox from './components/InfoBox.vue'
+import axios from 'axios'
+
+const allCountriesApi = `https://disease.sh/v3/covid-19/countries`
+const worldWideApi = `https://disease.sh/v3/covid-19/all`
 
 export default {
   components: {
     TheHeader,
-    TheTable
+    TheTable,
+    InfoBox,
+  },
+  data() {
+    return {
+      allCountriesData: [],
+      infoBoxData: {},
+      countries: [],
+      tableData: [],
+    }
+  },
+  methods: {
+    loadData() {
+      axios.get(allCountriesApi).then((res) => {
+        if (res.status === 200) {
+          this.allCountriesData = res.data
+          this.countries = this.allCountriesData.map((country) => ({
+            name: country.country,
+            code: country.countryInfo.iso2,
+          }))
+          this.tableData = this.allCountriesData.map((country) => ({
+            country: country.country,
+            cases: country.cases,
+          }))
+        }
+      })
+    },
+    loadWorldWideData() {
+      axios.get(worldWideApi).then((res) => {
+        if (res.status === 200) {
+          this.infoBoxData = res.data
+        }
+      })
+    },
+    loadDataByCountry(countryCode) {
+      console.log(countryCode)
+      if (countryCode === 'WW') {
+        this.loadWorldWideData()
+      } else {
+        const countryApi = `https://disease.sh/v3/covid-19/countries/${countryCode}`
+
+        axios.get(countryApi).then((res) => {
+          if (res.status === 200) {
+            console.log(res.data)
+            this.infoBoxData = res.data
+          }
+        })
+      }
+    },
+    formatToLocaleString(num) {
+      return Number(num).toLocaleString()
+    },
+  },
+  mounted() {
+    this.loadData()
+    this.loadWorldWideData()
   },
 }
 </script>
@@ -53,7 +136,9 @@ export default {
   margin-bottom: 20px;
 }
 
-.app-header > h1, .app-right-title, .app-graph-title {
+.app-header > h1,
+.app-right-title,
+.app-graph-title {
   color: gray;
 }
 
@@ -74,11 +159,17 @@ export default {
   height: 884px;
 }
 
+.app-stats {
+  display: flex;
+  /* width: 500px; */
+  justify-content: space-between;
+}
+
 .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
 body {
   margin: 0;
