@@ -1,9 +1,8 @@
 <template>
   <div class="map">
     <l-map
-      v-model="zoom"
-      v-model:zoom="zoom"
-      :center="[47.41322, -1.219482]"
+      :zoom="zoom"
+      :center="mapCenter"
     >
       <l-tile-layer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -16,7 +15,7 @@
         :fillColor="circleTypeColors[type].hex"
         :fill="true"
         :fillOpacity="0.5"
-        :radius="Math.sqrt(country[type]) * 400"
+        :radius="Math.sqrt(country[type]) * circleTypeColors[type].multiplier"
       ></l-circle>
     </l-map>
   </div>
@@ -32,19 +31,21 @@ export default {
     LTileLayer,
     LCircle,
   },
-  props: ['mapData', 'type'],
+  props: ['mapData', 'type', 'mapCenter', 'zoom'],
   data() {
     return {
-      zoom: 2,
       circleTypeColors: {
         cases: {
           hex: '#CC1034',
+          multiplier: 500
         },
         recovered: {
           hex: '#7dd71d',
+          multiplier: 300
         },
         deaths: {
           hex: '#fb443',
+          multiplier: 1000
         },
       },
     }

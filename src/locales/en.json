@@ -14,5 +14,12 @@
     },
     "in_total": "in total"
   },
+  "chart": {
+    "title": {
+      "new_cases": "New cases",
+      "new_recovered": "New recovered",
+      "new_deaths": "New deaths"
+    }
+  },
   "worldwide": "Worldwide"
 }

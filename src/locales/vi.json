@@ -14,5 +14,12 @@
     },
     "in_total": "tổng cộng"
   },
+  "chart": {
+    "title": {
+      "new_cases": "Số ca nhiễm mới",
+      "new_recovered": "Số ca khỏi mới",
+      "new_deaths": "Số tử vong mới"
+    }
+  },
   "worldwide": "Toàn thế giới"
 }

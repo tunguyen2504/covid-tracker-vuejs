@@ -9,5 +9,8 @@ module.exports = {
       compositionOnly: true,
       fullInstall: true
     }
+  },
+  configureWebpack: {
+    devtool: 'source-map'
   }
 }

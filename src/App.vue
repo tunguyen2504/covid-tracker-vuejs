@@ -11,6 +11,7 @@
           :title="infoBoxTotalCaseTitle"
           :total="formatToLocaleString(infoBoxData.cases)"
           :newCases="formatToLocaleString(infoBoxData.todayCases)"
+          :class="{ 'info-box-red--selected': mapType === 'cases' }"
           @box-selected="infoBoxSelected"
         ></info-box>
         <info-box
@@ -18,6 +19,7 @@
           :title="infoBoxRecoveredTitle"
           :total="formatToLocaleString(infoBoxData.recovered)"
           :newCases="formatToLocaleString(infoBoxData.todayRecovered)"
+          :class="{ 'info-box-green--selected': mapType === 'recovered' }"
           @box-selected="infoBoxSelected"
         ></info-box>
         <info-box
@@ -25,6 +27,7 @@
           :title="infoBoxDeathTitle"
           :total="formatToLocaleString(infoBoxData.deaths)"
           :newCases="formatToLocaleString(infoBoxData.todayDeaths)"
+          :class="{ 'info-box-black--selected': mapType === 'deaths' }"
           @box-selected="infoBoxSelected"
         ></info-box>
       </div>
@@ -33,6 +36,8 @@
         <map-container
           :mapData="allCountriesData"
           :type="mapType"
+          :mapCenter="mapCenter"
+          :zoom="mapZoom"
         ></map-container>
       </div>
     </div>
@@ -44,6 +49,9 @@
           </div>
         </template>
         <the-table :tableData="tableData"></the-table>
+
+        <h3 className="app-graph-title">{{ $t('worldwide')}} - {{ chartTitleType }}</h3>
+        <TheGraph :dataProps="chartData" v-if="chartData" :type="mapType"/>
       </el-card>
     </div>
   </div>
@@ -52,27 +60,35 @@
 <script>
 import TheHeader from './components/TheHeader.vue'
 import TheTable from './components/TheTable.vue'
+import TheGraph from './components/TheGraph.vue'
 import InfoBox from './components/InfoBox.vue'
 import MapContainer from './components/MapContainer.vue'
 import axios from 'axios'
 
 const allCountriesApi = `https://disease.sh/v3/covid-19/countries`
 const worldWideApi = `https://disease.sh/v3/covid-19/all`
+const worldWideHistoryApi = `https://disease.sh/v3/covid-19/historical/all?lastdays=120`
 
 export default {
   components: {
     TheHeader,
     TheTable,
+    TheGraph,
     InfoBox,
     MapContainer,
   },
   data() {
     return {
       allCountriesData: [],
+      worldWideHistoryData: {},
+      countryHistoryData: {},
+      // chartData: {},
       infoBoxData: {},
       countries: [],
       tableData: [],
       mapType: 'cases',
+      mapCenter: [47.41322, -1.219482],
+      mapZoom: 2,
     }
   },
   computed: {
@@ -85,9 +101,21 @@ export default {
     infoBoxDeathTitle() {
       return this.$t('info_box.title.deaths')
     },
+    chartTitleType() {
+      if (this.mapType === 'cases') {
+        return this.$t('chart.title.new_cases')
+      } else if (this.mapType === 'recovered') {
+        return this.$t('chart.title.new_recovered')
+      } else {
+        return this.$t('chart.title.new_deaths')
+      }
+    },
+    chartData() {
+      return this.worldWideHistoryData[this.mapType]
+    },
   },
   methods: {
-    loadData() {
+    loadTableData() {
       axios.get(allCountriesApi).then((res) => {
         if (res.status === 200) {
           this.allCountriesData = res.data
@@ -102,24 +130,40 @@ export default {
         }
       })
     },
-    loadWorldWideData() {
+    loadInfoBoxData() {
       axios.get(worldWideApi).then((res) => {
         if (res.status === 200) {
           this.infoBoxData = res.data
         }
       })
     },
+    loadChartData() {
+      axios.get(worldWideHistoryApi).then((res) => {
+        if (res.status === 200) {
+          this.worldWideHistoryData = res.data
+          // this.chartData = this.worldWideHistoryData['cases']
+          // console.log(this.worldWideHistoryData)
+          // console.log(this.chartData)
+        }
+      })
+    },
     loadDataByCountry(countryCode) {
       console.log(countryCode)
       if (countryCode === 'WW') {
-        this.loadWorldWideData()
+        this.loadInfoBoxData()
+        this.mapCenter = [47.41322, -1.219482]
+        this.mapZoom = 2
       } else {
         const countryApi = `https://disease.sh/v3/covid-19/countries/${countryCode}`
 
         axios.get(countryApi).then((res) => {
           if (res.status === 200) {
-            console.log(res.data)
             this.infoBoxData = res.data
+            this.mapCenter = [
+              this.infoBoxData.countryInfo.lat,
+              this.infoBoxData.countryInfo.long,
+            ]
+            this.mapZoom = 5
           }
         })
       }
@@ -133,8 +177,9 @@ export default {
     },
   },
   mounted() {
-    this.loadData()
-    this.loadWorldWideData()
+    this.loadTableData()
+    this.loadInfoBoxData()
+    this.loadChartData()
   },
 }
 </script>
@@ -197,10 +242,34 @@ export default {
   padding-bottom: 15px;
 }
 
+.app-graph {
+  flex-grow: 1;
+  height: 319px;
+}
+
+.app-graph-title {
+  margin-bottom: 20px;
+}
+
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.info-box-red--selected {
+  border-top-color: red;
+  border-top-width: medium;
+}
+
+.info-box-green--selected {
+  border-top-color: greenyellow;
+  border-top-width: medium;
+}
+
+.info-box-black--selected {
+  border-top-color: black;
+  border-top-width: medium;
 }
 
 body {

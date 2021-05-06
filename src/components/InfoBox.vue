@@ -3,9 +3,9 @@
     <h4>{{ title }}</h4>
     <h2
       :class="{
-        'info-box--cases--red active': type === 'cases',
-        'info-box--case--black': type === 'deaths',
-        'info-box--case--green': type === 'recovered',
+        'info-box--cases--red': type === 'cases',
+        'info-box--cases--black': type === 'deaths',
+        'info-box--cases--green': type === 'recovered',
       }"
     >
       +{{ newCases }}
@@ -82,7 +82,7 @@ export default {
   color: black !important;
 }
 
-.info-box--case--green {
+.info-box--cases--green {
   color: greenyellow !important;
 }
 

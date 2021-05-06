@@ -14,5 +14,12 @@
     },
     "in_total": "en total"
   },
+  "chart": {
+    "title": {
+      "new_cases": "Nouveaux cas",
+      "new_recovered": "Nouvelles guérisons",
+      "new_deaths": "Nouveaux décès"
+    }
+  },
   "worldwide": "Dans le monde"
 }
