@@ -1,13 +1,21 @@
 <template>
   <div class="app-header">
+    <img src="../../public/favicon.png" />
     <h1>COVID-19 TRACKER</h1>
-    <el-dropdown trigger="click" @command="onLanguageSelect">
+    <el-dropdown trigger="click" @command="onLanguageSelect" :="lang">
       <span class="el-dropdown-link">
-        {{ $i18n.locale.toUpperCase() }}<i class="el-icon-arrow-down el-icon--right"></i>
+        {{ lang.toUpperCase() }}
+        <i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item v-for="locale in locales" :key="locale.code" :command="locale.code">{{ locale.name }}</el-dropdown-item>
+          <el-dropdown-item
+            v-for="(lang, i) in languagesList"
+            :key="`lang${i}`"
+            :value="lang"
+            :command="lang"
+            >{{ lang.toUpperCase() }}</el-dropdown-item
+          >
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -25,29 +33,41 @@
 
 <script>
 import { getSupportedLocales } from '../util/i18n/supported-locales'
+import { languages } from '../i18n'
 export default {
   props: ['countries'],
   emits: ['country-changed'],
   data() {
     return {
       locales: getSupportedLocales(),
-      selectedLanguage: this.$i18n.locale.toUpperCase(),
       selectedCountry: 'WW',
+      languagesList: languages,
     }
   },
   computed: {
     worldwideLabel() {
       return this.$t('worldwide')
-    }
+    },
+    lang: {
+      get: function () {
+        return this.$store.state.locale
+      },
+      set: function (newVal) {
+        this.$store.dispatch('changeLocale', {i18n: this.$i18n, newLocale: newVal})
+      },
+    },
   },
   methods: {
     onCountrySelect() {
       this.$emit('country-changed', this.selectedCountry)
     },
     onLanguageSelect(locale) {
-      this.$i18n.locale = locale
+      this.lang = locale
     },
   },
+  mounted() {
+    this.$i18n.locale = this.lang
+  }
 }
 </script>
 
@@ -59,5 +79,9 @@ export default {
 
 .el-icon-arrow-down {
   font-size: 12px;
+}
+
+img {
+  width: 10%;
 }
 </style>

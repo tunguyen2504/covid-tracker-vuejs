@@ -19,7 +19,8 @@
       "cases": "New cases",
       "recovered": "New recovered",
       "deaths": "New deaths"
-    }
+    },
+    "no_data": "No data to be displayed."
   },
   "worldwide": "Worldwide"
 }

@@ -40,7 +40,7 @@ export default {
       chartOptions: {
         chart: {
           id: 'new-case-chart',
-          defaultLocale: 'en',
+          defaultLocale: this.$i18n.locale,
           locales: [
             en,
             fr,
@@ -99,8 +99,6 @@ export default {
   },
   methods: {
     buildData() {
-      console.log('buildData')
-      console.log(this.chartData)
       this.lineChartData = []
       var lastDataPoint = null
       for (var date in this.chartData) {

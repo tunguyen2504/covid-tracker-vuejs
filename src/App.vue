@@ -38,22 +38,28 @@
           :type="mapType"
           :mapCenter="mapCenter"
           :zoom="mapZoom"
+          v-if="allCountriesData"
         ></map-container>
       </div>
     </div>
     <div class="app-right-container">
-      <el-card class="app-right">
+      <el-card class="app-right" >
         <template #header>
           <div class="card-header">
             <h3 class="app-right-title">{{ $t('table.header') }}</h3>
           </div>
         </template>
-        <the-table :tableData="tableData"></the-table>
+        <the-table :tableData="tableData" v-if="tableData"></the-table>
 
         <h3 className="app-graph-title">
-          {{ chartTitleType }}
+          {{ selectedCountry.code === 'WW' ? this.$t('worldwide') : selectedCountry.name }} - {{ chartTitleType }}
         </h3>
-        <TheGraph class="app-graph" :dataProps="chartData" v-if="chartData" :type="mapType"/>
+        <TheGraph
+          class="app-graph"
+          :dataProps="chartData"
+          v-if="chartData"
+          :type="mapType"
+        />
       </el-card>
     </div>
   </div>
@@ -86,6 +92,10 @@ export default {
       infoBoxData: {},
       countries: [],
       tableData: [],
+      selectedCountry: {
+        name: this.worldWideText,
+        code: 'WW',
+      },
       mapType: 'cases',
       mapCenter: [47.41322, -1.219482],
       mapZoom: 2,
@@ -107,6 +117,9 @@ export default {
     chartData() {
       return this.historyData[this.mapType]
     },
+    isChartLoading() {
+      return this.chartData === null
+    }
   },
   methods: {
     loadTableData() {
@@ -169,6 +182,16 @@ export default {
       }
     },
     onCountryChange(countryCode) {
+      if (countryCode === 'WW') {
+        this.selectedCountry = {
+          name: 'Worldwide',
+          code: 'WW',
+        }
+      } else {
+        this.selectedCountry = this.countries.find(
+          (country) => country.code === countryCode
+        )
+      }
       this.loadDataByCountry(countryCode), this.loadChartData(countryCode)
     },
     infoBoxSelected(type) {
@@ -247,11 +270,12 @@ export default {
 
 .app-graph {
   flex-grow: 1;
-  height: 319px;
+  height: 300px;
 }
 
 .app-graph-title {
-  margin-bottom: 20px;
+  margin-top: 40px;
+  margin-bottom: 10px;
 }
 
 .card-header {
@@ -273,6 +297,27 @@ export default {
 .info-box-black--selected {
   border-top-color: black;
   border-top-width: medium;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #409eff;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 body {

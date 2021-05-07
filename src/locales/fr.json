@@ -19,7 +19,8 @@
       "cases": "Nouveaux cas",
       "recovered": "Nouvelles guérisons",
       "deaths": "Nouveaux décès"
-    }
+    },
+    "no_data": "Pas de données à afficher."
   },
   "worldwide": "Dans le monde"
 }

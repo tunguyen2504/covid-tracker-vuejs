@@ -19,7 +19,8 @@
       "cases": "Số ca nhiễm mới",
       "recovered": "Số ca khỏi mới",
       "deaths": "Số tử vong mới"
-    }
+    },
+    "no_data": "Không có dữ liệu để hiển thị."
   },
   "worldwide": "Toàn thế giới"
 }
