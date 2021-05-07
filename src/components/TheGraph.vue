@@ -4,11 +4,15 @@
     type="line"
     :options="chartOptions"
     :series="series"
+    ref="lineChart"
   ></apexchart>
 </template>
 
 <script>
 import VueApexCharts from 'vue3-apexcharts'
+// import { getSupportedLocales } from '../util/i18n/supported-locales'
+import en from 'apexcharts/dist/locales/en.json'
+import fr from 'apexcharts/dist/locales/fr.json'
 
 export default {
   components: {
@@ -19,10 +23,16 @@ export default {
     chartData() {
       return this.dataProps
     },
+    language() {
+      return this.$i18n.locale
+    },
   },
   watch: {
     chartData() {
       this.buildData()
+    },
+    language() {
+      this.updateLocale()
     },
   },
   data() {
@@ -30,11 +40,58 @@ export default {
       chartOptions: {
         chart: {
           id: 'new-case-chart',
+          defaultLocale: 'en',
+          locales: [
+            en,
+            fr,
+            // Define locale for Vietnamese
+            {
+              name: 'vi',
+              options: {
+                shortMonths: [
+                  'Th1',
+                  'Th2',
+                  'Th3',
+                  'Th4',
+                  'Th5',
+                  'Th6',
+                  'Th7',
+                  'Th8',
+                  'Th9',
+                  'Th10',
+                  'Th11',
+                  'Th12',
+                ],
+                toolbar: {
+                  exportToSVG: 'Tải xuống tệp SVG',
+                  exportToPNG: 'Tải xuống tệp PNG',
+                  exportToCSV: 'Tải xuống tệp CSV',
+                  menu: 'Menu',
+                  selectionZoom: 'Kéo thả & Zoom',
+                  zoomIn: 'Phóng to',
+                  zoomOut: 'Thu nhỏ',
+                  pan: 'Cuộn',
+                  reset: 'Reset Zoom',
+                },
+              },
+            },
+          ],
         },
         xaxis: {
           type: 'datetime',
         },
-        colors: ['#CC1034']
+        tooltip: {
+          enabled: true,
+          x: {
+            show: false,
+          },
+        },
+        stroke: {
+          curve: 'straight',
+          width: 2,
+        },
+        colors: ['#4a4a4a'],
+        width: '1px',
       },
       series: [],
       lineChartData: [],
@@ -56,11 +113,24 @@ export default {
         }
         lastDataPoint = this.chartData[date]
       }
-      console.log(this.lineChartData)
+      this.updateChart()
+    },
+    updateChart() {
+      // These lines are used to prevent duplicated charts at first load
+      if (this.series.length > 0) {
+        this.series = []
+      }
+      this.series.push({
+        name: this.$t('chart.title.' + this.type),
+        data: this.lineChartData,
+      })
+      // till here
+    },
+    updateLocale() {
+      this.$refs.lineChart.chart.setLocale(this.language)
       this.series = [
         {
-          name: 'New cases',
-          data: this.lineChartData,
+          name: this.$t('chart.title.' + this.type),
         },
       ]
     },

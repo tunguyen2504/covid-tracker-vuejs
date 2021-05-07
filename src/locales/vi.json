@@ -16,9 +16,12 @@
   },
   "chart": {
     "title": {
-      "new_cases": "Số ca nhiễm mới",
-      "new_recovered": "Số ca khỏi mới",
-      "new_deaths": "Số tử vong mới"
+      "cases": "Số ca nhiễm mới",
+      "recovered": "Số ca khỏi mới",
+      "deaths": "Số tử vong mới"
+    },
+    "toolbar": {
+      "exportToSVG": "Tải xuống SVG"
     }
   },
   "worldwide": "Toàn thế giới"

@@ -16,9 +16,12 @@
   },
   "chart": {
     "title": {
-      "new_cases": "Nouveaux cas",
-      "new_recovered": "Nouvelles guérisons",
-      "new_deaths": "Nouveaux décès"
+      "cases": "Nouveaux cas",
+      "recovered": "Nouvelles guérisons",
+      "deaths": "Nouveaux décès"
+    },
+    "toolbar": {
+      "exportToSVG": "Télécharger SVG"
     }
   },
   "worldwide": "Dans le monde"

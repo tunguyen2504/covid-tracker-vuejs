@@ -16,9 +16,12 @@
   },
   "chart": {
     "title": {
-      "new_cases": "New cases",
-      "new_recovered": "New recovered",
-      "new_deaths": "New deaths"
+      "cases": "New cases",
+      "recovered": "New recovered",
+      "deaths": "New deaths"
+    },
+    "toolbar": {
+      "exportToSVG": "D SVG"
     }
   },
   "worldwide": "Worldwide"

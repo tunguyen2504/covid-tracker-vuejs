@@ -44,7 +44,7 @@ export default {
           multiplier: 300
         },
         deaths: {
-          hex: '#fb443',
+          hex: '#4a4a4a',
           multiplier: 1000
         },
       },
@@ -55,7 +55,7 @@ export default {
 
 <style scoped>
 .map {
-  height: 600px;
+  height: 650px;
   /* width: 500px; */
   background-color: white;
   padding: 1rem;

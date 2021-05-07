@@ -3,7 +3,7 @@
     <div class="app-left">
       <the-header
         :countries="countries"
-        @country-changed="loadDataByCountry"
+        @country-changed="onCountryChange"
       ></the-header>
       <div class="app-stats">
         <info-box
@@ -50,8 +50,10 @@
         </template>
         <the-table :tableData="tableData"></the-table>
 
-        <h3 className="app-graph-title">{{ $t('worldwide')}} - {{ chartTitleType }}</h3>
-        <TheGraph :dataProps="chartData" v-if="chartData" :type="mapType"/>
+        <h3 className="app-graph-title">
+          {{ chartTitleType }}
+        </h3>
+        <TheGraph class="app-graph" :dataProps="chartData" v-if="chartData" :type="mapType"/>
       </el-card>
     </div>
   </div>
@@ -80,9 +82,7 @@ export default {
   data() {
     return {
       allCountriesData: [],
-      worldWideHistoryData: {},
-      countryHistoryData: {},
-      // chartData: {},
+      historyData: {},
       infoBoxData: {},
       countries: [],
       tableData: [],
@@ -103,15 +103,15 @@ export default {
     },
     chartTitleType() {
       if (this.mapType === 'cases') {
-        return this.$t('chart.title.new_cases')
+        return this.$t('chart.title.cases')
       } else if (this.mapType === 'recovered') {
-        return this.$t('chart.title.new_recovered')
+        return this.$t('chart.title.recovered')
       } else {
-        return this.$t('chart.title.new_deaths')
+        return this.$t('chart.title.deaths')
       }
     },
     chartData() {
-      return this.worldWideHistoryData[this.mapType]
+      return this.historyData[this.mapType]
     },
   },
   methods: {
@@ -137,15 +137,21 @@ export default {
         }
       })
     },
-    loadChartData() {
-      axios.get(worldWideHistoryApi).then((res) => {
-        if (res.status === 200) {
-          this.worldWideHistoryData = res.data
-          // this.chartData = this.worldWideHistoryData['cases']
-          // console.log(this.worldWideHistoryData)
-          // console.log(this.chartData)
-        }
-      })
+    loadChartData(countryCode) {
+      if (countryCode === 'WW') {
+        axios.get(worldWideHistoryApi).then((res) => {
+          if (res.status === 200) {
+            this.historyData = res.data
+          }
+        })
+      } else {
+        const countryHistoryApi = `https://disease.sh/v3/covid-19/historical/${countryCode}?lastdays=120`
+        axios.get(countryHistoryApi).then((res) => {
+          if (res.status === 200) {
+            this.historyData = res.data.timeline
+          }
+        })
+      }
     },
     loadDataByCountry(countryCode) {
       console.log(countryCode)
@@ -168,6 +174,9 @@ export default {
         })
       }
     },
+    onCountryChange(countryCode) {
+      this.loadDataByCountry(countryCode), this.loadChartData(countryCode)
+    },
     infoBoxSelected(type) {
       this.mapType = type
       console.log(this.mapType)
@@ -179,7 +188,7 @@ export default {
   mounted() {
     this.loadTableData()
     this.loadInfoBoxData()
-    this.loadChartData()
+    this.loadChartData('WW')
   },
 }
 </script>
