@@ -102,13 +102,7 @@ export default {
       return this.$t('info_box.title.deaths')
     },
     chartTitleType() {
-      if (this.mapType === 'cases') {
-        return this.$t('chart.title.cases')
-      } else if (this.mapType === 'recovered') {
-        return this.$t('chart.title.recovered')
-      } else {
-        return this.$t('chart.title.deaths')
-      }
+      return this.$t('chart.title.' + this.mapType)
     },
     chartData() {
       return this.historyData[this.mapType]

@@ -19,9 +19,6 @@
       "cases": "New cases",
       "recovered": "New recovered",
       "deaths": "New deaths"
-    },
-    "toolbar": {
-      "exportToSVG": "D SVG"
     }
   },
   "worldwide": "Worldwide"

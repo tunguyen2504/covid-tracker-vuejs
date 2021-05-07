@@ -44,6 +44,6 @@ export default {
   overflow: scroll;
   overflow-x: hidden;
   /* height: 85vh; */
-  height: 460px;
+  height: 465px;
 }
 </style>
