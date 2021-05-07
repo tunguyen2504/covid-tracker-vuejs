@@ -161,7 +161,6 @@ export default {
       }
     },
     loadDataByCountry(countryCode) {
-      console.log(countryCode)
       if (countryCode === 'WW') {
         this.loadInfoBoxData()
         this.mapCenter = [47.41322, -1.219482]
@@ -196,7 +195,6 @@ export default {
     },
     infoBoxSelected(type) {
       this.mapType = type
-      console.log(this.mapType)
     },
     formatToLocaleString(num) {
       return Number(num).toLocaleString()
