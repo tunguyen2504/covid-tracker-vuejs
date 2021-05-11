@@ -1,0 +1,11 @@
+{
+  "card": {
+    "title": "Total @:{type}",
+    "in_total": "en total"
+  },
+  "type": {
+    "cases": "cas",
+    "recovered": "guérisons",
+    "deaths": "décès"
+  }
+}

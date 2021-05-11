@@ -1,0 +1,10 @@
+{
+  "chart": {
+    "title": "New @:{type}"
+  },
+  "type": {
+    "cases": "cases",
+    "recovered": "recovered",
+    "deaths": "deaths"
+  }
+}

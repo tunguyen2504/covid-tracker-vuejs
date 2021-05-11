@@ -1,5 +1,4 @@
 import { createApp } from 'vue'
-// import Vuex from 'vuex'
 import { store } from './store'
 import { ElCard, ElSelect, ElOption, ElTable, ElTableColumn, ElDropdown, ElDropdownMenu, ElDropdownItem } from 'element-plus'
 import App from './App.vue'

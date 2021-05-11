@@ -1,0 +1,10 @@
+{
+  "chart": {
+    "title": "Số ca @:{type} mới"
+  },
+  "type": {
+    "cases": "nhiễm",
+    "recovered": "đã khỏi",
+    "deaths": "tử vong"
+  }
+}

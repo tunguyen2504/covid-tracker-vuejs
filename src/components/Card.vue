@@ -1,6 +1,8 @@
 <template>
   <el-card class="info-box" @click="boxSelected(type)">
-    <h4>{{ title }}</h4>
+    <h4>
+      {{ $t('card.title', { type: 'type.' + type }) }}
+    </h4>
     <h2
       :class="{
         'info-box--cases--red': type === 'cases',
@@ -10,19 +12,14 @@
     >
       +{{ newCases }}
     </h2>
-    <p>{{ total }} {{ $t('info_box.in_total') }}</p>
+    <p>{{ total }} {{ $t('card.in_total') }}</p>
   </el-card>
 </template>
 
 <script>
 export default {
-  props: ['type', 'title', 'newCases', 'total'],
+  props: ['type', 'newCases', 'total'],
   emits: ['box-selected'],
-  data() {
-    return {
-      active: 'cases',
-    }
-  },
   methods: {
     boxSelected(type) {
       this.$emit('box-selected', type)
@@ -30,6 +27,10 @@ export default {
   },
 }
 </script>
+
+<i18n locale="en" src="../locales/card/en.json"></i18n>
+<i18n locale="fr" src="../locales/card/fr.json"></i18n>
+<i18n locale="vi" src="../locales/card/vi.json"></i18n>
 
 <style scoped>
 .info-box {

@@ -1,6 +1,7 @@
 import { createI18n } from 'vue-i18n'
 import getBrowserLocale from "@/util/i18n/get-browser-locale"
 import { supportedLocalesInclude } from "./util/i18n/supported-locales"
+// import CustomFormatter from './util/i18n/custom-formatter'
 
 /**
  * Load locale messages
@@ -33,9 +34,12 @@ function getStartingLocale() {
 
 export const selectedLocale = getStartingLocale()
 export const languages = Object.getOwnPropertyNames(loadLocaleMessages())
+// const formatter = new CustomFormatter({ selectedLocale })
+
 
 export default new createI18n({
   locale: selectedLocale,
+  // formatter: new CustomFormatter({ selectedLocale }),
   fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE || "en",
   messages: loadLocaleMessages()
 })

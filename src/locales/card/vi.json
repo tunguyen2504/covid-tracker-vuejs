@@ -1,0 +1,11 @@
+{
+  "card": {
+    "title": "Tổng số @:{type}",
+    "in_total": "tổng cộng"
+  },
+  "type": {
+    "cases": "nhiễm",
+    "recovered": "đã khỏi",
+    "deaths": "tử vong"
+  }
+}

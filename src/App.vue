@@ -6,30 +6,27 @@
         @country-changed="onCountryChange"
       ></the-header>
       <div class="app-stats">
-        <info-box
+        <card
           type="cases"
-          :title="infoBoxTotalCaseTitle"
           :total="formatToLocaleString(infoBoxData.cases)"
           :newCases="formatToLocaleString(infoBoxData.todayCases)"
           :class="{ 'info-box-red--selected': mapType === 'cases' }"
           @box-selected="infoBoxSelected"
-        ></info-box>
-        <info-box
+        ></card>
+        <card
           type="recovered"
-          :title="infoBoxRecoveredTitle"
           :total="formatToLocaleString(infoBoxData.recovered)"
           :newCases="formatToLocaleString(infoBoxData.todayRecovered)"
           :class="{ 'info-box-green--selected': mapType === 'recovered' }"
           @box-selected="infoBoxSelected"
-        ></info-box>
-        <info-box
+        ></card>
+        <card
           type="deaths"
-          :title="infoBoxDeathTitle"
           :total="formatToLocaleString(infoBoxData.deaths)"
           :newCases="formatToLocaleString(infoBoxData.todayDeaths)"
           :class="{ 'info-box-black--selected': mapType === 'deaths' }"
           @box-selected="infoBoxSelected"
-        ></info-box>
+        ></card>
       </div>
 
       <div class="app-map">
@@ -43,21 +40,13 @@
       </div>
     </div>
     <div class="app-right-container">
-      <el-card class="app-right" >
-        <template #header>
-          <div class="card-header">
-            <h3 class="app-right-title">{{ $t('table.header') }}</h3>
-          </div>
-        </template>
-        <the-table :tableData="tableData" v-if="tableData"></the-table>
-
-        <h3 className="app-graph-title">
-          {{ selectedCountry.code === 'WW' ? this.$t('worldwide') : selectedCountry.name }} - {{ chartTitleType }}
-        </h3>
-        <TheGraph
+      <el-card class="app-right">
+        <TheTable :tableData="tableData" v-if="tableData" />
+        <TheChart
           class="app-graph"
           :dataProps="chartData"
           v-if="chartData"
+          :selectedCountry="selectedCountry"
           :type="mapType"
         />
       </el-card>
@@ -68,8 +57,8 @@
 <script>
 import TheHeader from './components/TheHeader.vue'
 import TheTable from './components/TheTable.vue'
-import TheGraph from './components/TheGraph.vue'
-import InfoBox from './components/InfoBox.vue'
+import TheChart from './components/TheChart.vue'
+import Card from './components/Card.vue'
 import MapContainer from './components/MapContainer.vue'
 import axios from 'axios'
 
@@ -81,8 +70,8 @@ export default {
   components: {
     TheHeader,
     TheTable,
-    TheGraph,
-    InfoBox,
+    TheChart,
+    Card,
     MapContainer,
   },
   data() {
@@ -93,7 +82,6 @@ export default {
       countries: [],
       tableData: [],
       selectedCountry: {
-        name: this.worldWideText,
         code: 'WW',
       },
       mapType: 'cases',
@@ -102,24 +90,12 @@ export default {
     }
   },
   computed: {
-    infoBoxTotalCaseTitle() {
-      return this.$t('info_box.title.total_cases')
-    },
-    infoBoxRecoveredTitle() {
-      return this.$t('info_box.title.recovered')
-    },
-    infoBoxDeathTitle() {
-      return this.$t('info_box.title.deaths')
-    },
-    chartTitleType() {
-      return this.$t('chart.title.' + this.mapType)
-    },
     chartData() {
       return this.historyData[this.mapType]
     },
     isChartLoading() {
       return this.chartData === null
-    }
+    },
   },
   methods: {
     loadTableData() {
@@ -183,7 +159,6 @@ export default {
     onCountryChange(countryCode) {
       if (countryCode === 'WW') {
         this.selectedCountry = {
-          name: 'Worldwide',
           code: 'WW',
         }
       } else {
@@ -207,6 +182,10 @@ export default {
   },
 }
 </script>
+
+<i18n locale="en" src="./locales/common/en.json"></i18n>
+<i18n locale="fr" src="./locales/common/fr.json"></i18n>
+<i18n locale="vi" src="./locales/common/vi.json"></i18n>
 
 <style>
 .app {
@@ -309,13 +288,21 @@ export default {
 
 /* Safari */
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 body {

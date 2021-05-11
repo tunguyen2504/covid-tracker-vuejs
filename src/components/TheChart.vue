@@ -1,4 +1,8 @@
 <template>
+  <h3 className="app-graph-title">
+    {{ selectedCountry.code === 'WW' ? $t('worldwide') : selectedCountry.name }}
+    - {{ chartTitleType }}
+  </h3>
   <apexchart
     width="400"
     type="line"
@@ -10,7 +14,6 @@
 
 <script>
 import VueApexCharts from 'vue3-apexcharts'
-// import { getSupportedLocales } from '../util/i18n/supported-locales'
 import en from 'apexcharts/dist/locales/en.json'
 import fr from 'apexcharts/dist/locales/fr.json'
 
@@ -18,13 +21,16 @@ export default {
   components: {
     apexchart: VueApexCharts,
   },
-  props: ['dataProps', 'type'],
+  props: ['dataProps', 'selectedCountry', 'type'],
   computed: {
     chartData() {
       return this.dataProps
     },
     language() {
       return this.$i18n.locale
+    },
+    chartTitleType() {
+      return this.$t('chart.title', { type: 'type.' + this.type })
     },
   },
   watch: {
@@ -119,7 +125,7 @@ export default {
         this.series = []
       }
       this.series.push({
-        name: this.$t('chart.title.' + this.type),
+        name: this.$t('chart.title', { type: 'type.' + this.type }),
         data: this.lineChartData,
       })
       // till here
@@ -128,7 +134,7 @@ export default {
       this.$refs.lineChart.chart.setLocale(this.language)
       this.series = [
         {
-          name: this.$t('chart.title.' + this.type),
+          name: this.$t('chart.title', { type: 'type.' + this.type }),
         },
       ]
     },
@@ -138,3 +144,7 @@ export default {
   },
 }
 </script>
+
+<i18n locale="en" src="../locales/chart/en.json"></i18n>
+<i18n locale="fr" src="../locales/chart/fr.json"></i18n>
+<i18n locale="vi" src="../locales/chart/vi.json"></i18n>
