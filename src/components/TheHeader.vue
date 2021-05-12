@@ -10,11 +10,11 @@
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item
-            v-for="(lang, i) in languagesList"
-            :key="`lang${i}`"
-            :value="lang"
-            :command="lang"
-            >{{ lang.toUpperCase() }}</el-dropdown-item
+            v-for="lang in languagesList"
+            :key="lang.code"
+            :value="lang.code"
+            :command="lang.code"
+            >{{ lang.code.toUpperCase() }}</el-dropdown-item
           >
         </el-dropdown-menu>
       </template>
@@ -33,15 +33,15 @@
 
 <script>
 import { getSupportedLocales } from '../util/i18n/supported-locales'
-import { languages } from '../i18n'
+import { loadLocaleMessagesAsync } from '../i18n'
 export default {
   props: ['countries'],
   emits: ['country-changed'],
   data() {
     return {
-      locales: getSupportedLocales(),
+      languagesList: getSupportedLocales(),
       selectedCountry: 'WW',
-      languagesList: languages,
+      // isLoading: false,
     }
   },
   computed: {
@@ -62,11 +62,20 @@ export default {
       this.$emit('country-changed', this.selectedCountry)
     },
     onLanguageSelect(locale) {
+      // this.isLoading = true
       this.lang = locale
+      this.loadLocaleMessages(locale).then(() => {
+        
+      })
+      // this.isLoading = false
     },
+    loadLocaleMessages(locale) {
+      loadLocaleMessagesAsync(locale)
+    }
   },
   mounted() {
     this.$i18n.locale = this.lang
+    this.loadLocaleMessages(this.$i18n.locale)
   }
 }
 </script>

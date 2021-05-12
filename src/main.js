@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import { store } from './store'
-import { ElCard, ElSelect, ElOption, ElTable, ElTableColumn, ElDropdown, ElDropdownMenu, ElDropdownItem } from 'element-plus'
+import { ElCard, ElSelect, ElOption, ElTable, ElTableColumn, ElDropdown, ElDropdownMenu, ElDropdownItem, ElLoading } from 'element-plus'
 import App from './App.vue'
 import i18n from './i18n'
 
@@ -17,5 +17,6 @@ app.component(ElTableColumn.name, ElTableColumn)
 app.component(ElDropdown.name, ElDropdown)
 app.component(ElDropdownMenu.name, ElDropdownMenu)
 app.component(ElDropdownItem.name, ElDropdownItem)
+app.use(ElLoading)
 
 app.mount('#app')
