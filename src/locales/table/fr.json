@@ -1,9 +1,0 @@
-{
-  "table": {
-    "header": "Total cas par pays",
-    "column": {
-      "countries": "Pays",
-      "total_cases": "Total cas"
-    }
-  }
-}

@@ -144,7 +144,3 @@ export default {
   },
 }
 </script>
-
-<i18n locale="en" src="../locales/chart/en.json"></i18n>
-<i18n locale="fr" src="../locales/chart/fr.json"></i18n>
-<i18n locale="vi" src="../locales/chart/vi.json"></i18n>

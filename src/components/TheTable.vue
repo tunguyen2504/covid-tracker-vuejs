@@ -41,10 +41,6 @@ export default {
 }
 </script>
 
-<i18n locale="en" src="../locales/table/en.json"></i18n>
-<i18n locale="fr" src="../locales/table/fr.json"></i18n>
-<i18n locale="vi" src="../locales/table/vi.json"></i18n>
-
 <style scoped>
 .table {
   /* margin: 20px 0; */

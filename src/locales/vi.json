@@ -1,0 +1,22 @@
+{
+  "table": {
+    "header": "Tổng số ca nhiễm",
+    "column": {
+      "countries": "Quốc gia",
+      "total_cases": "Số ca nhiễm"
+    }
+  },
+  "card": {
+    "title": "Tổng số @:{type}",
+    "in_total": "tổng cộng"
+  },
+  "chart": {
+    "title": "Số ca @:{type} mới"
+  },
+  "type": {
+    "cases": "nhiễm",
+    "recovered": "đã khỏi",
+    "deaths": "tử vong"
+  },
+  "worldwide": "Toàn thế giới"
+}

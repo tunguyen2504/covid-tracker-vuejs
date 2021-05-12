@@ -28,10 +28,6 @@ export default {
 }
 </script>
 
-<i18n locale="en" src="../locales/card/en.json"></i18n>
-<i18n locale="fr" src="../locales/card/fr.json"></i18n>
-<i18n locale="vi" src="../locales/card/vi.json"></i18n>
-
 <style scoped>
 .info-box {
   flex: 1;

@@ -183,10 +183,6 @@ export default {
 }
 </script>
 
-<i18n locale="en" src="./locales/common/en.json"></i18n>
-<i18n locale="fr" src="./locales/common/fr.json"></i18n>
-<i18n locale="vi" src="./locales/common/vi.json"></i18n>
-
 <style>
 .app {
   display: flex;

@@ -1,0 +1,22 @@
+{
+  "table": {
+    "header": "Total case by country",
+    "column": {
+      "countries": "Countries",
+      "total_cases": "Total cases"
+    }
+  },
+  "card": {
+    "title": "Total @:{type}",
+    "in_total": "in total"
+  },
+  "chart": {
+    "title": "New @:{type}"
+  },
+  "type": {
+    "cases": "cases",
+    "recovered": "recovered",
+    "deaths": "deaths"
+  },
+  "worldwide": "Worldwide"
+}
