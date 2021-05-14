@@ -1,5 +1,8 @@
 # covid-tracking-app
 
+## Project deployed here
+Go to [https://covid-tracking-app-bed96.web.app](https://covid-tracking-app-bed96.web.app/)
+
 ## Project setup
 ```
 npm install
