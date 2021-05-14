@@ -13,10 +13,12 @@
   "chart": {
     "title": "Nouveaux @:{type}"
   },
-  "type": {
-    "cases": "cas",
-    "recovered": "guérisons",
-    "deaths": "décès"
-  },
-  "worldwide": "Dans le monde"
+  "common": {
+    "worldwide": "Dans le monde",
+    "type": {
+      "cases": "cas",
+      "recovered": "guérisons",
+      "deaths": "décès"
+    }
+  }
 }

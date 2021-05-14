@@ -13,10 +13,12 @@
   "chart": {
     "title": "Số ca @:{type} mới"
   },
-  "type": {
-    "cases": "nhiễm",
-    "recovered": "đã khỏi",
-    "deaths": "tử vong"
-  },
-  "worldwide": "Toàn thế giới"
+  "common": {
+    "worldwide": "Toàn thế giới",
+    "type": {
+      "cases": "nhiễm",
+      "recovered": "đã khỏi",
+      "deaths": "tử vong"
+    }
+  }
 }

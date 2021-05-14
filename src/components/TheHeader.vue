@@ -45,7 +45,7 @@ export default {
   },
   computed: {
     worldwideLabel() {
-      return this.$t('worldwide')
+      return this.$t('common.worldwide')
     },
     lang: {
       get: function () {

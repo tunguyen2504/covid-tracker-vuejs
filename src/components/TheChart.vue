@@ -2,7 +2,7 @@
   <div>
     <h3 className="app-graph-title">
       {{
-        selectedCountry.code === 'WW' ? $t('worldwide') : selectedCountry.name
+        selectedCountry.code === 'WW' ? $t('common.worldwide') : selectedCountry.name
       }}
       - {{ chartTitleType }}
     </h3>
@@ -33,7 +33,7 @@ export default {
       return this.$i18n.locale
     },
     chartTitleType() {
-      return this.$t('chart.title', { type: 'type.' + this.type })
+      return this.$t('chart.title', { type: 'common.type.' + this.type })
     },
   },
   watch: {
@@ -137,7 +137,7 @@ export default {
         this.series = []
       }
       this.series.push({
-        name: this.$t('chart.title', { type: 'type.' + this.type }),
+        name: this.$t('chart.title', { type: 'common.type.' + this.type }),
         data: this.lineChartData,
       })
       console.log(this.series[0].name)
@@ -147,7 +147,7 @@ export default {
       this.$refs.lineChart.chart.setLocale(this.language)
       this.series = [
         {
-          name: this.$t('chart.title', { type: 'type.' + this.type }),
+          name: this.$t('chart.title', { type: 'common.type.' + this.type }),
         },
       ]
     },

@@ -13,10 +13,12 @@
   "chart": {
     "title": "New @:{type}"
   },
-  "type": {
-    "cases": "cases",
-    "recovered": "recovered",
-    "deaths": "deaths"
-  },
-  "worldwide": "Worldwide"
+  "common": {
+    "worldwide": "Worldwide",
+    "type": {
+      "cases": "cases",
+      "recovered": "recovered",
+      "deaths": "deaths"
+    }
+  }
 }

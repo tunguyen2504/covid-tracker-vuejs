@@ -1,7 +1,7 @@
 <template>
   <el-card class="info-box" @click="boxSelected(type)">
     <h4>
-      {{ $t('card.title', { type: 'type.' + type }) }}
+      {{ $t('card.title', { type: 'common.type.' + type }) }}
     </h4>
     <h2
       :class="{
