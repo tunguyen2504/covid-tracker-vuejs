@@ -226,6 +226,12 @@ export default {
   /* height: 870px; */
 }
 
+.app-right .el-card__body {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+
 .app-right-container {
   /* height: 100%; */
   height: 884px;
@@ -235,6 +241,15 @@ export default {
   display: flex;
   /* width: 500px; */
   justify-content: space-between;
+}
+
+@media (max-width: 500px) {
+  .app-stats {
+    display: flex;
+  /* flex-grow: 1; */
+  flex-direction: column;
+
+  }
 }
 
 .app-map {
@@ -270,35 +285,6 @@ export default {
 .info-box-black--selected {
   border-top-color: black;
   border-top-width: medium;
-}
-
-.loader {
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #409eff;
-  width: 120px;
-  height: 120px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
-  animation: spin 2s linear infinite;
-}
-
-/* Safari */
-@-webkit-keyframes spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }
 
 body {

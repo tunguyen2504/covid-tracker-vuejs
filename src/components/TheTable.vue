@@ -8,13 +8,12 @@
     :default-sort="{ prop: 'cases', order: 'descending' }"
     style="width: 100%"
   >
-    <el-table-column prop="country" :label="columnCountryLabel" width="180">
+    <el-table-column prop="country" :label="columnCountryLabel">
     </el-table-column>
     <el-table-column
       prop="cases"
       :label="columnTotalCasesLabel"
       sortable
-      width="180"
       align="right"
       :formatter="formatNumber"
     >

@@ -4,7 +4,6 @@
     - {{ chartTitleType }}
   </h3>
   <apexchart
-    width="400"
     type="line"
     :options="chartOptions"
     :series="series"
@@ -93,7 +92,7 @@ export default {
           },
         },
         stroke: {
-          curve: 'straight',
+          curve: 'smooth',
           width: 2,
         },
         colors: ['#4a4a4a'],
