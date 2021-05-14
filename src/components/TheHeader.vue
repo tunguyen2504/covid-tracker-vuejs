@@ -41,7 +41,6 @@ export default {
     return {
       languagesList: getSupportedLocales(),
       selectedCountry: 'WW',
-      // isLoading: false,
     }
   },
   computed: {
@@ -62,18 +61,14 @@ export default {
       this.$emit('country-changed', this.selectedCountry)
     },
     onLanguageSelect(locale) {
-      // this.isLoading = true
       this.lang = locale
-      this.loadLocaleMessages(locale).then(() => {
-        
-      })
-      // this.isLoading = false
+      this.loadLocaleMessages(locale)
     },
     loadLocaleMessages(locale) {
       loadLocaleMessagesAsync(locale)
     }
   },
-  mounted() {
+  created() {
     this.$i18n.locale = this.lang
     this.loadLocaleMessages(this.$i18n.locale)
   }

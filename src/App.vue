@@ -1,6 +1,6 @@
 <template>
-  <div class="app">
-    <div class="app-left">
+  <div class="app" v-loading.fullscreen.lock="isLoading">
+    <div class="app-left" v-if="!isLoading">
       <the-header
         :countries="countries"
         @country-changed="onCountryChange"
@@ -8,22 +8,22 @@
       <div class="app-stats">
         <card
           type="cases"
-          :total="formatToLocaleString(infoBoxData.cases)"
-          :newCases="formatToLocaleString(infoBoxData.todayCases)"
+          :total="infoBoxData.cases"
+          :newCases="infoBoxData.todayCases"
           :class="{ 'info-box-red--selected': mapType === 'cases' }"
           @box-selected="infoBoxSelected"
         ></card>
         <card
           type="recovered"
-          :total="formatToLocaleString(infoBoxData.recovered)"
-          :newCases="formatToLocaleString(infoBoxData.todayRecovered)"
+          :total="infoBoxData.recovered"
+          :newCases="infoBoxData.todayRecovered"
           :class="{ 'info-box-green--selected': mapType === 'recovered' }"
           @box-selected="infoBoxSelected"
         ></card>
         <card
           type="deaths"
-          :total="formatToLocaleString(infoBoxData.deaths)"
-          :newCases="formatToLocaleString(infoBoxData.todayDeaths)"
+          :total="infoBoxData.deaths"
+          :newCases="infoBoxData.todayDeaths"
           :class="{ 'info-box-black--selected': mapType === 'deaths' }"
           @box-selected="infoBoxSelected"
         ></card>
@@ -78,7 +78,7 @@ export default {
     return {
       allCountriesData: [],
       historyData: {},
-      infoBoxData: {},
+      infoBoxData: null,
       countries: [],
       tableData: [],
       selectedCountry: {
@@ -93,8 +93,12 @@ export default {
     chartData() {
       return this.historyData[this.mapType]
     },
-    isChartLoading() {
-      return this.chartData === null
+    isLoading() {
+      return (
+        this.chartData === null ||
+        this.infoBoxData === null ||
+        this.tableData.length === 0
+      )
     },
   },
   methods: {
@@ -171,9 +175,6 @@ export default {
     infoBoxSelected(type) {
       this.mapType = type
     },
-    formatToLocaleString(num) {
-      return Number(num).toLocaleString()
-    },
   },
   mounted() {
     this.loadTableData()
@@ -202,9 +203,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* width: 60vw;
-  margin-top: 30px;
-  margin-left: 20px; */
   margin-bottom: 20px;
 }
 
@@ -216,14 +214,12 @@ export default {
 
 .app-left {
   flex: 0.9;
-  /* height: 95vh; */
   height: 884px;
 }
 
 .app-right {
   display: flex;
   flex-direction: column;
-  /* height: 870px; */
 }
 
 .app-right .el-card__body {
@@ -233,22 +229,18 @@ export default {
 }
 
 .app-right-container {
-  /* height: 100%; */
   height: 884px;
 }
 
 .app-stats {
   display: flex;
-  /* width: 500px; */
   justify-content: space-between;
 }
 
 @media (max-width: 500px) {
   .app-stats {
     display: flex;
-  /* flex-grow: 1; */
-  flex-direction: column;
-
+    flex-direction: column;
   }
 }
 
@@ -258,7 +250,6 @@ export default {
 
 .app-graph {
   flex-grow: 1;
-  height: 300px;
 }
 
 .app-graph-title {

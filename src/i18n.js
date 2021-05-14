@@ -1,6 +1,7 @@
 import { createI18n } from 'vue-i18n'
-import getBrowserLocale from "@/util/i18n/get-browser-locale"
-import { supportedLocalesInclude } from "./util/i18n/supported-locales"
+import getBrowserLocale from '@/util/i18n/get-browser-locale'
+import { supportedLocalesInclude } from './util/i18n/supported-locales'
+import numberFormats from './util/i18n/number-formats'
 // import CustomFormatter from './util/i18n/custom-formatter'
 
 function getStartingLocale() {
@@ -9,7 +10,7 @@ function getStartingLocale() {
   if (supportedLocalesInclude(browserLocale)) {
     return browserLocale
   } else {
-    return process.env.VUE_APP_I18N_LOCALE || "en"
+    return process.env.VUE_APP_I18N_LOCALE || 'en'
   }
 }
 
@@ -19,8 +20,9 @@ export const selectedLocale = getStartingLocale()
 const i18n = new createI18n({
   locale: selectedLocale,
   // formatter: new CustomFormatter({ selectedLocale }),
-  fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE || "en",
-  messages: {}
+  fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'en',
+  messages: {},
+  numberFormats
 })
 
 const loadedLanguages = []
@@ -37,7 +39,7 @@ export async function loadLocaleMessagesAsync(locale) {
   }
   // If the language hasn't been loaded yet
   return await import(
-    /* webpackChunkName: "locale-[request]" */ `@/locales/${locale}.json`
+    /* webpackChunkName: 'locale-[request]' */ `@/locales/${locale}.json`
   ).then(messages => {
     i18n.global.setLocaleMessage(locale, messages.default)
     loadedLanguages.push(locale)

@@ -10,9 +10,9 @@
         'info-box--cases--green': type === 'recovered',
       }"
     >
-      +{{ newCases }}
+      +{{ $n(newCases, 'decimal') }}
     </h2>
-    <p>{{ total }} {{ $t('card.in_total') }}</p>
+    <p>{{ $n(total, 'decimal') }} {{ $t('card.in_total') }}</p>
   </el-card>
 </template>
 

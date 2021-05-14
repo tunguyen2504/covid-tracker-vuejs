@@ -1,14 +1,18 @@
 <template>
-  <h3 className="app-graph-title">
-    {{ selectedCountry.code === 'WW' ? $t('worldwide') : selectedCountry.name }}
-    - {{ chartTitleType }}
-  </h3>
-  <apexchart
-    type="line"
-    :options="chartOptions"
-    :series="series"
-    ref="lineChart"
-  ></apexchart>
+  <div>
+    <h3 className="app-graph-title">
+      {{
+        selectedCountry.code === 'WW' ? $t('worldwide') : selectedCountry.name
+      }}
+      - {{ chartTitleType }}
+    </h3>
+    <apexchart
+      type="line"
+      :options="chartOptions"
+      :series="series"
+      ref="lineChart"
+    ></apexchart>
+  </div>
 </template>
 
 <script>
@@ -41,6 +45,7 @@ export default {
     },
   },
   data() {
+    var self = this
     return {
       chartOptions: {
         chart: {
@@ -54,18 +59,18 @@ export default {
               name: 'vi',
               options: {
                 shortMonths: [
-                  'Th1',
-                  'Th2',
-                  'Th3',
-                  'Th4',
-                  'Th5',
-                  'Th6',
-                  'Th7',
-                  'Th8',
-                  'Th9',
-                  'Th10',
-                  'Th11',
-                  'Th12',
+                  'Tháng 1',
+                  'Tháng 2',
+                  'Tháng 3',
+                  'Tháng 4',
+                  'Tháng 5',
+                  'Tháng 6',
+                  'Tháng 7',
+                  'Tháng 8',
+                  'Tháng 9',
+                  'Tháng 10',
+                  'Tháng 11',
+                  'Tháng 12',
                 ],
                 toolbar: {
                   exportToSVG: 'Tải xuống tệp SVG',
@@ -84,6 +89,14 @@ export default {
         },
         xaxis: {
           type: 'datetime',
+        },
+        yaxis: {
+          labels: {
+            formatter: function(val) {
+              // Format number of yaxis label according to language
+              return self.$n(val, 'decimal')
+            }
+          }
         },
         tooltip: {
           enabled: true,
@@ -127,6 +140,7 @@ export default {
         name: this.$t('chart.title', { type: 'type.' + this.type }),
         data: this.lineChartData,
       })
+      console.log(this.series[0].name)
       // till here
     },
     updateLocale() {

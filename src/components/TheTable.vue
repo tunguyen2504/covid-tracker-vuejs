@@ -34,7 +34,8 @@ export default {
   },
   methods: {
     formatNumber(row) {
-      return Number(row.cases).toLocaleString()
+      // Format number of case column according to language
+      return this.$n(row.cases, 'decimal')
     },
   },
 }
